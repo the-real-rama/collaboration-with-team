@@ -1,0 +1,11 @@
+Creating User Stories:
+====================
+I follow a structured approach to creating user stories. I start by gathering requirements through stakeholder interviews, workshops, and analyzing healthcare documentation. I then break these requirements into smaller, manageable user stories.
+
+Each user story follows the format: "As a [type of user], I want [an action] so that [a benefit/a value]." For example, "As a nurse, I want to access patient records quickly so that I can provide timely care." This ensures clarity and focus on the user's perspective. I also include acceptance criteria to define when the story is complete, helping the development team understand the scope.
+
+Additionally, I define testing scenarios within the acceptance criteria to ensure Development and QA consider all scenarios. By providing detailed information, I make sure the user story is successful.
+
+For larger projects, I create EPICs, which are high-level user stories that capture broad requirements. EPICs are broken down into smaller user stories for incremental development and testing.
+
+I prioritize user stories based on business value, urgency, and healthcare regulations, and continuously refine them through feedback and collaboration with stakeholders and the development team. This iterative process helps deliver a product that aligns with user needs and healthcare goals.
