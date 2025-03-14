@@ -46,3 +46,12 @@ I assign tasks to the respective team members and use JIRA's workflow capabiliti
 
 In Confluence, I create and maintain comprehensive documentation, including requirement specifications, meeting notes, and project plans. I attach screenshots, data structures, diagrams, links to relevant information, product knowledge, vision and roadmap, and meeting notes to ensure all necessary details are captured. 
 I also use it to collaborate with stakeholders and team members by sharing documents, gathering feedback, and maintaining a centralized knowledge base. This helps ensure that everyone has access to the latest information and can contribute to the project's success.
+
+
+Transactional Data Experience:
+==========================
+I worked with transactional data, which involves handling large volumes of data generated from business transactions. I collected data from various sources, including databases, ERP systems, CRM systems, SharePoint, spreadsheets, and cloud platforms, using tools like SSIS for extraction. 
+
+I ensure the accuracy and integrity of the data through data cleaning and validation processes, transforming it as needed before loading it into data warehouses or databases. I then use tools like Power BI and Tableau to create detailed dashboards and reports, providing valuable insights to stakeholders. 
+
+Throughout this process, I ensure compliance with relevant regulations and standards, such as HIPAA, to protect sensitive information and maintain data security. Additionally, I collaborate with cross-functional teams, including IT, finance, and operations, to ensure that transactional data is effectively utilized to support business objectives
