@@ -9,3 +9,16 @@ Additionally, I define testing scenarios within the acceptance criteria to ensur
 For larger projects, I create EPICs, which are high-level user stories that capture broad requirements. EPICs are broken down into smaller user stories for incremental development and testing.
 
 I prioritize user stories based on business value, urgency, and healthcare regulations, and continuously refine them through feedback and collaboration with stakeholders and the development team. This iterative process helps deliver a product that aligns with user needs and healthcare goals.
+
+
+Agile Product Owner/Business Analyst:
+==========================
+In my role as an Agile Product Owner/Business Analyst, I host kickoff meetings with the development and QA teams, as well as the manager, to present user stories and address any queries they may have. 
+I attend daily standups to answer additional questions that arise during the development phase. I also participate in meetings for incremental demos to review progress and gather feedback. 
+
+After development is complete, I collaborate with the QA team to test the features thoroughly. Once a feature is completed, I attend retrospectives to discuss what went well, what didn't, and how we can improve moving forward.
+
+Additionally, I regularly collaborate with clients and stakeholders to understand their priorities and preferences, and I present features after they are deployed to QA environments to ensure alignment with their expectations.
+I maintain the product backlog, ensuring it is up-to-date and reflects the current priorities and requirements. 
+
+I facilitate communication between the development team and stakeholders to ensure everyone is aligned on the project goals and progress. By continuously refining user stories and acceptance criteria based on feedback, I help ensure that the final product meets the users' needs and business objectives.
