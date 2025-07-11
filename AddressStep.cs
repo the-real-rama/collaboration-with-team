@@ -1,43 +1,42 @@
 <EditForm EditContext="@CAddrEditContext">
     <DataAnnotationsValidator />
-    <div class="row px-2 pt-2">-->
-@if (MergedValidationMsgs?.Count > 0)
-    {
-        <ul class="alert alert-danger validateSummary">
-            @foreach (var msg in MergedValidationMsgs)
-            {
-                <li class="text-danger">
-                    @msg
-                </li>
-            }
-        </ul>
-    }
-
-<div class="col-12">
-        <div class="d-flex justify-content-between">
-            <div class="col-6 w-49">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="EffectiveDate">Effective Date:</span>
+    <div class="row px-2 pt-2">
+    @if (MergedValidationMsgs?.Count > 0)
+        {
+            <ul class="alert alert-danger validateSummary">
+                @foreach (var msg in MergedValidationMsgs)
+                {
+                    <li class="text-danger">
+                        @msg
+                    </li>
+                }
+            </ul>
+        }
+        <div class="col-12">
+            <div class="d-flex justify-content-between">
+                <div class="col-6 w-49">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="EffectiveDate">Effective Date:</span>
+                        </div>
+                        <InputDate id="EffectiveDate" class="form-control" Type="InputDateType.Date" @bind-Value="ContactAddrModel.EffectiveDate" readonly="@ViewMode" />
                     </div>
-                    <InputDate id="EffectiveDate" class="form-control" Type="InputDateType.Date" @bind-Value="ContactAddrModel.EffectiveDate" readonly="@ViewMode" />
                 </div>
-            </div>
-            <div class="col-6 w-49">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="TerminationDate">Termination Date:</span>
+                <div class="col-6 w-49">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="TerminationDate">Termination Date:</span>
+                        </div>
+                        <InputDate id="TerminationDate" class="form-control" Type="InputDateType.Date" @bind-Value="ContactAddrModel.TerminationDate" readonly="@ViewMode" />
                     </div>
-                    <InputDate id="TerminationDate" class="form-control" Type="InputDateType.Date" @bind-Value="ContactAddrModel.TerminationDate" readonly="@ViewMode" />
                 </div>
             </div>
         </div>
     </div>
-</div>
 </EditForm>
 
 <EditForm EditContext="EditContext" OnValidSubmit="HandleAdd">
-    <AddressDetails Model="@Current"
+    <AddressDetails Model="@CurrentAddr"
                     ActionType="@ActionType"
                     T="@GMIS.Models.Entities.Address"
                     AddressTypes="@AddressTypes"
