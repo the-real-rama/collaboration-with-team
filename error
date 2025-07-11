@@ -1,0 +1,4 @@
+2025-07-11T20:26:42.241Z] Error: System.InvalidOperationException: EditForm requires either a Model parameter, or an EditContext parameter, please provide one of these.
+   at Microsoft.AspNetCore.Components.Forms.EditForm.OnParametersSet()
+   at Microsoft.AspNetCore.Components.ComponentBase.CallOnParametersSetAsync()
+   at Microsoft.AspNetCore.Components.ComponentBase.RunInitAndSetParametersAsync()
