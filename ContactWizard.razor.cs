@@ -27,14 +27,14 @@ private async Task OnWizardCompleted(Dictionary<string, object> results)
             {
                 var insertedDetail = JsonConvert.DeserializeObject<ContactDetail>(responseModel.Data.ToString());
 
-                // For each Address, insert Address and then ContactAddress linking it
-                foreach (var address in addresses)
+                // Use LINQ to create a collection of tasks to insert Addresses and ContactAddresses
+                var tasks = addresses.Select(async address =>
                 {
                     // Insert Address
-                    responseModel = await apiClient.Add<BaseResponseModel, Address>(address);
-                    if (responseModel?.Success == true)
+                    var addressResponse = await apiClient.Add<BaseResponseModel, Address>(address);
+                    if (addressResponse?.Success == true)
                     {
-                        var insertedAddress = JsonConvert.DeserializeObject<Address>(responseModel.Data.ToString());
+                        var insertedAddress = JsonConvert.DeserializeObject<Address>(addressResponse.Data.ToString());
 
                         // Create ContactAddress linking Contact, ContactDetail, and Address
                         var contactAddress = new ContactAddress
@@ -43,21 +43,24 @@ private async Task OnWizardCompleted(Dictionary<string, object> results)
                             ContactDetailId = insertedDetail.ContactDetailId,
                             AddressId = insertedAddress.AddressId,
                             IsActive = true,
-                            ModifiedBy = contact.ModifiedBy // or from context
+                            ModifiedBy = contact.ModifiedBy // or appropriate user
                         };
 
                         // Insert ContactAddress
-                        responseModel = await apiClient.Add<BaseResponseModel, ContactAddress>(contactAddress);
-                        if (responseModel?.Success != true)
+                        var contactAddressResponse = await apiClient.Add<BaseResponseModel, ContactAddress>(contactAddress);
+                        if (contactAddressResponse?.Success != true)
                         {
-                            // Handle error inserting ContactAddress
+                            // Handle error inserting ContactAddress (optional: throw or log)
                         }
                     }
                     else
                     {
-                        // Handle error inserting Address
+                        // Handle error inserting Address (optional: throw or log)
                     }
-                }
+                });
+
+                // Await all insert tasks to complete
+                await Task.WhenAll(tasks);
             }
             else
             {
@@ -71,6 +74,6 @@ private async Task OnWizardCompleted(Dictionary<string, object> results)
     }
     else if (ActionType == ActionTypes.Update)
     {
-        // Similar logic for updates...
+        // Similar update logic here...
     }
 }
