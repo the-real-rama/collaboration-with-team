@@ -1,8 +1,63 @@
-            Contact contact = results["Contact"] as Contact;
-            ContactDetail details = results["Contact Details"] as ContactDetail;
-            List<Address> addresses = results["Addresses"] as List<Address>;
+private async Task OnWizardCompleted(Dictionary<string, object> results)
+{
+    Contact contact = results["Contact"] as Contact;
+    ContactDetail details = results["Contact Details"] as ContactDetail;
+    List<Address> addresses = results["Addresses"] as List<Address>;
 
-            if (contact == null || details == null || addresses == null)
+    if (contact == null || details == null || addresses == null)
+    {
+        return;
+    }
+
+    BaseResponseModel responseModel = new BaseResponseModel();
+
+    if (ActionType == ActionTypes.Add)
+    {
+        contact.IsActive = true;
+        responseModel = await apiClient.Add<BaseResponseModel, Contact>(contact);
+        if (responseModel != null && responseModel.Success)
+        {
+            var insertedContact = JsonConvert.DeserializeObject<Contact>(responseModel.Data.ToString());
+
+            details.ContactId = insertedContact.ContactId;
+            details.IsActive = true;
+            responseModel = await apiClient.Add<BaseResponseModel, ContactDetail>(details);
+            var insertedDetail = JsonConvert.DeserializeObject<ContactDetail>(responseModel.Data.ToString());
+
+            var tasks = addresses.Select(async address =>
             {
-                return;
-            }
+                address.IsActive = true;
+                var addressResponse = await apiClient.Add<BaseResponseModel, Address>(address);
+                if (addressResponse != null && addressResponse.Success)
+                {
+                    var insertedAddress = JsonConvert.DeserializeObject<Address>(addressResponse.Data.ToString());
+
+                    var contactAddress = new ContactAddress
+                    {
+                        ContactId = insertedContact.ContactId,
+                        AddressId = insertedAddress.AddressId,
+                        IsActive = true,
+                        ModifiedBy = User?.UserName,
+                    };
+
+                    var contactAddressResponse = await apiClient.Add<BaseResponseModel, ContactAddress>(contactAddress);
+                    if (contactAddressResponse?.Success != true)
+                    {
+                        // Handle error inserting ContactAddress (optional: throw or log)
+                    }
+                }
+            });
+
+            await Task.WhenAll(tasks);
+        }
+    }
+    else if (ActionType.Equals(ActionTypes.Update))
+    {
+        //responseModel = await apiClient.Update<BaseResponseModel, Contact>(contact);
+        //if (responseModel != null)
+        //{
+        //    responseModel.Message = responseModel.Success ? "Contact updated successfully." : $"Unable to update Contact record. {responseModel.Message}";
+        //}
+    }
+    //return Task.CompletedTask;
+}
