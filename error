@@ -1,70 +1,8 @@
-protected override async Task OnInitializedAsync()
-{
-    await base.OnInitializedAsync();
+            Contact contact = results["Contact"] as Contact;
+            ContactDetail details = results["Contact Details"] as ContactDetail;
+            List<Address> addresses = results["Addresses"] as List<Address>;
 
-    await InitializeAddressDataAsync();
-
-    // Ensure ContactAddrModel and CurrentAddr are never null
-    if (ContactAddrModel == null)
-        ContactAddrModel = new ContactAddress { ModifiedBy = User?.UserName };
-
-    if (CurrentAddr == null)
-        CurrentAddr = new Address { ModifiedBy = User?.UserName };
-
-    SetupContactAddressEditContext();
-
-    EditContext ??= new EditContext(CurrentAddr);
-
-    await GetAddressTypesAsync();
-}
-
-
-private Task InitializeAddressDataAsync()
-{
-    if (Context is ValueTuple<List<Address>, List<ContactAddress>> tuple)
-    {
-        Addresses = tuple.Item1.Select(a => (Address)a.Clone()).ToList();
-        ContactAddresses = tuple.Item2.Select(ca => (ContactAddress)ca.Clone()).ToList();
-    }
-    else
-    {
-        Addresses = new List<Address>();
-        ContactAddresses = new List<ContactAddress>();
-    }
-
-    // Do NOT overwrite CurrentAddr or ContactAddrModel here — only initialize if null
-
-    return Task.CompletedTask;
-}
-
-
-private void SetupContactAddressEditContext()
-{
-    if (ContactAddrModel == null)
-    {
-        ContactAddrModel = new ContactAddress { ModifiedBy = User?.UserName };
-    }
-
-    if (CAddrEditContext == null || CAddrEditContext.Model != ContactAddrModel)
-    {
-        CAddrEditContext = new EditContext(ContactAddrModel);
-        CAddrEditContext.OnValidationStateChanged += (sender, args) =>
-        {
-            MergedValidationMsgs = CAddrEditContext.GetValidationMessages().ToList();
-            StateHasChanged();
-        };
-    }
-}
-
-
-private void ResetCurrentModels()
-{
-    CurrentAddr = new Address { ModifiedBy = User?.UserName };
-    EditContext = new EditContext(CurrentAddr);
-
-    ContactAddrModel = new ContactAddress { ModifiedBy = User?.UserName };
-    SetupContactAddressEditContext();
-
-    StateHasChanged();
-}
-
+            if (contact == null || details == null || addresses == null)
+            {
+                return;
+            }
