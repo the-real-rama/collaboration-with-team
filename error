@@ -1,3 +1,24 @@
+protected override async Task OnInitializedAsync()
+{
+    await base.OnInitializedAsync();
+
+    await InitializeAddressDataAsync();
+
+    // Ensure ContactAddrModel and CurrentAddr are never null
+    if (ContactAddrModel == null)
+        ContactAddrModel = new ContactAddress { ModifiedBy = User?.UserName };
+
+    if (CurrentAddr == null)
+        CurrentAddr = new Address { ModifiedBy = User?.UserName };
+
+    SetupContactAddressEditContext();
+
+    EditContext ??= new EditContext(CurrentAddr);
+
+    await GetAddressTypesAsync();
+}
+
+
 private Task InitializeAddressDataAsync()
 {
     if (Context is ValueTuple<List<Address>, List<ContactAddress>> tuple)
@@ -11,9 +32,7 @@ private Task InitializeAddressDataAsync()
         ContactAddresses = new List<ContactAddress>();
     }
 
-    // Initialize CurrentAddr but do not touch ContactAddrModel here
-    if (CurrentAddr == null)
-        CurrentAddr = new Address { ModifiedBy = User?.UserName };
+    // Do NOT overwrite CurrentAddr or ContactAddrModel here — only initialize if null
 
     return Task.CompletedTask;
 }
@@ -45,13 +64,7 @@ private void ResetCurrentModels()
 
     ContactAddrModel = new ContactAddress { ModifiedBy = User?.UserName };
     SetupContactAddressEditContext();
+
+    StateHasChanged();
 }
 
-
-protected override async Task OnInitializedAsync()
-{
-    await base.OnInitializedAsync();
-    await InitializeAddressDataAsync();
-    SetupContactAddressEditContext();
-    await GetAddressTypesAsync();
-}
