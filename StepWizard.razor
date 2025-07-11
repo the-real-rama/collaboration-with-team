@@ -1,0 +1,19 @@
+<div class="wizard-container">
+    <div class="progress mb-1">
+        <div class="progress-bar bg-gradient" role="progressbar" style="width:@((CurrentStepIndex + 1) * 100 / Steps.Count)%;" aria-valuenow="@((CurrentStepIndex + 1) * 100 / Steps.Count)" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    <div class="step-indicators d-flex justify-content-between w-100">
+        @for (var i = 0; i < Steps.Count; i++)
+        {
+            <div class="step d-flex justify-content-center align-items-center text-center flex-fill @(GetStepClass(i)) px-3 pt-2 shadow-sm bg-gradient"
+                 @onclick="@(GetStepOnClick(i))"
+                 style="cursor:@(IsStepClickable(i) ? "pointer" : "not-allowed")">
+                <span class="step-title p-2 text-white">@Steps[i].StepName</span>
+            </div>
+        }
+    </div>
+    <div class="wizard-content">
+        <DynamicComponent Parameters="@ActiveStep.Parameters"
+                          Type="@ActiveStep.ComponentType" />
+    </div>
+</div>
