@@ -1,1 +1,1 @@
-        var addressIds = ContactAddresses.Select(ca => ca.AddressId && ca.ContactId == contactId).Distinct().ToList();
+Error: System.InvalidOperationException: Object of type 'GMIS.Web.Components.Pages.Group.ContactViews.ContactWizard' does not have a property matching the name 'ContactModel'.
