@@ -1,5 +1,11 @@
 private async Task LoadFullContactDataAsync(int contactId)
 {
+    // Load Contact
+    var contactResponse = await apiClient.Get<BaseResponseModel, Contact>(new Contact { ContactId = contactId });
+    CurrentContact = contactResponse?.Success == true 
+        ? JsonConvert.DeserializeObject<Contact>(contactResponse.Data.ToString()) 
+        : new Contact();
+
     // Load ContactDetail
     var detailResp = await apiClient.Get<BaseResponseModel, ContactDetail>(new ContactDetail { ContactId = contactId });
     CurrentContactDetail = detailResp?.Success == true 
@@ -18,6 +24,7 @@ private async Task LoadFullContactDataAsync(int contactId)
         ? JsonConvert.DeserializeObject<List<ContactAddress>>(contactAddrResp.Data.ToString())
         : new List<ContactAddress>();
 }
+
 
 
 private async Task OnDisplayClick(Contact contact)
