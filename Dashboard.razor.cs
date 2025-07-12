@@ -50,3 +50,56 @@ private async Task LoadRelatedDataForContactsAsync()
         Addresses = new List<Address>();
     }
 }
+
+
+
+private Contact CurrentContact;
+private ContactDetail CurrentContactDetail;
+private List<Address> CurrentAddresses = new List<Address>();
+private List<ContactAddress> CurrentContactAddresses = new List<ContactAddress>();
+
+private async Task OnDisplayClick(Contact contact)
+{
+    CurrentContact = contact;
+    await LoadRelatedDataForContactsAsyncForSingle(contact.ContactId);
+
+    await DialogModal.ShowAsync(new ModalOption
+    {
+        Title = "View Contact Details",
+        ChildComponent = typeof(ContactWizard),
+        Parameters = new Dictionary<string, object>
+        {
+            { "ActionType", ActionTypes.View },
+            { "ContactModel", CurrentContact },
+            { "ContactDetailModel", CurrentContactDetail },
+            { "AddressContext", (CurrentAddresses, CurrentContactAddresses) }
+        },
+        ModalSize = ModalSize.ExtraLarge,
+        ShowBody = true
+    });
+}
+
+private async Task OnEditClick(Contact contact)
+{
+    CurrentContact = contact;
+    await LoadRelatedDataForContactsAsyncForSingle(contact.ContactId);
+
+    await DialogModal.ShowAsync(new ModalOption
+    {
+        Title = "Edit Contact",
+        ChildComponent = typeof(EditPage),
+        Parameters = new Dictionary<string, object>
+        {
+            { "Context", CurrentContact },
+            { "ContactDetailModel", CurrentContactDetail },
+            { "Addresses", CurrentAddresses },
+            { "ContactAddresses", CurrentContactAddresses },
+            { "ActionType", ActionTypes.Update },
+            { "ButtonType", ButtonTypes.SaveCancel },
+            { "OnSubmitCallback", EventCallback.Factory.Create<BaseResponseModel>(this, RefreshQuickGrid) }
+        },
+        ModalSize = ModalSize.ExtraLarge,
+        ShowBody = true
+    });
+}
+
