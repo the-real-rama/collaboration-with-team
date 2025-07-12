@@ -36,7 +36,12 @@ private async Task LoadRelatedDataForContactsAsync()
     }
 
     // 3. From filtered ContactAddresses get AddressIds to filter Addresses
-    var addressIds = ContactAddresses.Select(ca => ca.AddressId).Distinct().ToList();
+  var addressIds = ContactAddresses
+    .Where(ca => ca.ContactId == contactId)
+    .Select(ca => ca.AddressId)
+    .Distinct()
+    .ToList();
+
 
     // 4. Fetch all Addresses and filter by those AddressIds
     var addressesResp = await apiClient.GetAll<BaseResponseModel, Address>();
