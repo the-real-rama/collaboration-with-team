@@ -1,1 +1,3 @@
-Error: System.InvalidOperationException: Object of type 'GMIS.Web.Components.Pages.Group.ContactViews.ContactWizard' does not have a property matching the name 'ContactModel'.
+[Parameter] public Contact ContactModel { get; set; }
+[Parameter] public ContactDetail ContactDetailModel { get; set; }
+[Parameter] public (List<Address> Addresses, List<ContactAddress> ContactAddresses) Context { get; set; }
